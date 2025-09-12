@@ -7,55 +7,27 @@ const router = express.Router();
 // Register user
 router.post('/register', async (req, res) => {
   try {
-    try {
-      console.log('Register request body:', req.body);
-      const {
-        name,
-        email,
-        password,
-        type,
-        phone,
-        location,
-        barRegistration,
-        specialization,
-        experience,
-        fees,
-        qualifications,
-        about
-      } = req.body;
+    console.log('Register request body:', req.body);
+    const {
+      name,
+      email,
+      password,
+      type,
+      phone,
+      location,
+      barRegistration,
+      specialization,
+      experience,
+      fees,
+      qualifications,
+      about
+    } = req.body;
 
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        console.log('User already exists:', email);
-        return res.status(400).json({ error: 'User already exists' });
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const user = new User({
-        name,
-        email,
-        password: hashedPassword,
-        type,
-        phone,
-        location,
-        barRegistration,
-        specialization,
-        experience,
-        fees,
-        qualifications,
-        about
-      });
-      await user.save();
-
-      console.log('User registered:', user);
-      res.status(201).json({ message: 'User registered successfully', user });
-    } catch (err) {
-      console.error('Register error:', err);
-      res.status(400).json({ error: err.message });
-    }
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ error: 'User already exists' });
+    if (existingUser) {
+      console.log('User already exists:', email);
+      return res.status(400).json({ error: 'User already exists' });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -75,9 +47,11 @@ router.post('/register', async (req, res) => {
     });
     await user.save();
 
-    res.status(201).json({ message: 'User registered successfully', user });
+    console.log('User registered:', user);
+    return res.status(201).json({ message: 'User registered successfully', user });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error('Register error:', err);
+    return res.status(400).json({ error: err.message });
   }
 });
 
@@ -100,12 +74,11 @@ router.post('/login', async (req, res) => {
     }
 
     console.log('Login successful:', user);
-    res.json({ message: 'Login successful', user });
+    return res.json({ message: 'Login successful', user });
   } catch (err) {
     console.error('Login error:', err);
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 });
 
 export default router;
-
