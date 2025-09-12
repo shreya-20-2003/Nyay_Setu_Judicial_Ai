@@ -16,7 +16,7 @@ import aiChatImage from "@/assets/ai-legal-chat.jpg";
 const Index = () => {
   const navigate = useNavigate();
   const [authModal, setAuthModal] = useState({ isOpen: false, feature: "" });
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   const handleFeatureClick = (feature: string) => {
     if (user) {
@@ -37,8 +37,7 @@ const Index = () => {
   const handleAuthenticated = (userData: any) => {
     setUser(userData);
     setAuthModal({ isOpen: false, feature: "" });
-    
-    // Navigate to the requested feature
+    // Navigate to the requested feature after successful backend authentication
     if (authModal.feature === "nyaya-ai") {
       navigate("/nyaya-ai");
     } else if (authModal.feature === "bias-detection") {

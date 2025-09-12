@@ -1,13 +1,46 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Scale, User, UserCheck, Phone, MapPin, Briefcase, GraduationCap, Gavel, Upload } from "lucide-react";
+import {
+  Scale,
+  User,
+  UserCheck,
+  Phone,
+  MapPin,
+  Briefcase,
+  GraduationCap,
+  Gavel,
+  Upload
+} from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -15,7 +48,11 @@ interface AuthModalProps {
   onAuthenticated: (user: any) => void;
 }
 
-export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) => {
+export const AuthModal = ({
+  isOpen,
+  onClose,
+  onAuthenticated
+}: AuthModalProps) => {
   const [activeTab, setActiveTab] = useState("signin");
   const [userType, setUserType] = useState<"citizen" | "lawyer" | "judge">("citizen");
   const [formData, setFormData] = useState({
@@ -24,48 +61,75 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
     password: "",
     phone: "",
     location: "",
-    // Lawyer specific fields
     barRegistration: "",
     specialization: "",
     experience: "",
     fees: "",
     qualifications: "",
-    about: "",
+    about: ""
   });
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSignIn = () => {
-    // Mock authentication - in real app, this would call your auth service
-    const user = {
-      id: "1",
-      name: formData.name || "John Doe",
-      email: formData.email,
-      type: userType,
-      avatar: "/api/placeholder/40/40"
-    };
-    onAuthenticated(user);
-    onClose();
+  const handleSignIn = async () => {
+    try {
+      const res = await fetch("https://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        onAuthenticated(data.user || data);
+        onClose();
+      } else {
+        alert(data.error || "Login failed");
+      }
+    } catch (err) {
+      alert("Network error");
+    }
   };
 
-  const handleSignUp = () => {
-    // Mock registration - in real app, this would create a new user
-    const user = {
-      id: "1",
-      name: formData.name,
-      email: formData.email,
-      type: userType,
-      avatar: "/api/placeholder/40/40"
-    };
-    onAuthenticated(user);
-    onClose();
+  const handleSignUp = async () => {
+    try {
+      const res = await fetch("https://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          location: formData.location,
+          barRegistration: formData.barRegistration,
+          specialization: formData.specialization,
+          experience: formData.experience,
+          fees: formData.fees,
+          qualifications: formData.qualifications,
+          about: formData.about,
+          type: userType
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        onAuthenticated(data.user || data);
+        onClose();
+      } else {
+        alert(data.error || "Registration failed");
+      }
+    } catch (err) {
+      alert("Network error");
+    }
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-screen overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Scale className="w-5 h-5 text-primary" />
@@ -88,6 +152,7 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
             </TabsTrigger>
           </TabsList>
 
+          {/* Sign In Tab */}
           <TabsContent value="signin" className="space-y-4">
             <Card>
               <CardHeader>
@@ -122,6 +187,7 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
             </Card>
           </TabsContent>
 
+          {/* Sign Up Tab */}
           <TabsContent value="signup" className="space-y-4">
             <Card>
               <CardHeader>
@@ -129,7 +195,6 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
                 <CardDescription>Join NyaySetu to access legal assistance</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* User Type Selection */}
                 <div className="space-y-2">
                   <Label>I am a</Label>
                   <Select value={userType} onValueChange={(value: "citizen" | "lawyer" | "judge") => setUserType(value)}>
@@ -137,29 +202,13 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="citizen">
-                        <div className="flex items-center gap-2">
-                          <User className="w-4 h-4" />
-                          Citizen
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="lawyer">
-                        <div className="flex items-center gap-2">
-                          <Briefcase className="w-4 h-4" />
-                          Lawyer
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="judge">
-                        <div className="flex items-center gap-2">
-                          <Gavel className="w-4 h-4" />
-                          Judge
-                        </div>
-                      </SelectItem>
+                      <SelectItem value="citizen">Citizen</SelectItem>
+                      <SelectItem value="lawyer">Lawyer</SelectItem>
+                      <SelectItem value="judge">Judge</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Basic Information */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="signup-name">Full Name</Label>
@@ -213,7 +262,7 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
                   />
                 </div>
 
-                {/* Lawyer Specific Fields */}
+                {/* Lawyer Fields */}
                 {userType === "lawyer" && (
                   <>
                     <div className="space-y-2">
@@ -289,16 +338,20 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
                           className="hidden"
                           id="certificates-upload"
                         />
-                        <Button 
+                        <Button
                           type="button"
-                          variant="outline" 
-                          onClick={() => document.getElementById('certificates-upload')?.click()}
+                          variant="outline"
+                          onClick={() =>
+                            document.getElementById("certificates-upload")?.click()
+                          }
                           className="w-full"
                         >
                           <Upload className="w-4 h-4 mr-2" />
                           Choose Certificates
                         </Button>
-                        <p className="text-sm text-muted-foreground mt-2">Upload your legal certificates (PDF, JPG, PNG)</p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Upload your legal certificates (PDF, JPG, PNG)
+                        </p>
                       </div>
                     </div>
 
@@ -314,7 +367,7 @@ export const AuthModal = ({ isOpen, onClose, onAuthenticated }: AuthModalProps) 
                   </>
                 )}
 
-                {/* Judge Specific Fields */}
+                {/* Judge Fields */}
                 {userType === "judge" && (
                   <>
                     <div className="space-y-2">
