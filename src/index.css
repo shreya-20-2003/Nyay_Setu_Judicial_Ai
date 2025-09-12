@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Indian Judiciary Platform - Vibrant Constitutional Colors */
+
+@layer base {
+  :root {
+    /* Core background - Clean constitutional white */
+    --background: 0 0% 100%;
+    --foreground: 220 95% 6%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 95% 6%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 95% 6%;
+
+    /* Deep Judicial Blue - Authority & Trust */
+    --primary: 215 85% 20%;
+    --primary-foreground: 0 0% 98%;
+    --primary-vibrant: 215 95% 30%;
+    --primary-light: 215 75% 85%;
+
+    /* Saffron Gold - Constitutional Honor */
+    --secondary: 35 95% 55%;
+    --secondary-foreground: 220 95% 6%;
+    --secondary-light: 35 85% 88%;
+
+    /* Indian Tricolor Green - Justice & Peace */
+    --judicial: 120 60% 25%;
+    --judicial-foreground: 0 0% 98%;
+    --judicial-light: 120 50% 85%;
+
+    /* Success Green - Positive outcomes */
+    --success: 138 65% 28%;
+    --success-foreground: 0 0% 98%;
+    --success-light: 138 55% 85%;
+
+    /* Alert/Bias Warning Orange */
+    --warning: 25 95% 55%;
+    --warning-foreground: 220 95% 6%;
+    --warning-light: 25 85% 88%;
+
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 30% 40%;
+
+    --accent: 220 60% 92%;
+    --accent-foreground: 220 90% 8%;
+
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 220 85% 25%;
+
+    --radius: 0.75rem;
+
+    /* Indian Tricolor Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--judicial)));
+    --gradient-justice: linear-gradient(45deg, hsl(var(--primary-vibrant)), hsl(var(--secondary)));
+    --gradient-constitutional: linear-gradient(180deg, hsl(var(--secondary)), hsl(0 0% 100%), hsl(var(--judicial)));
+    --gradient-bias: linear-gradient(135deg, hsl(var(--warning)), hsl(var(--destructive)));
+    --gradient-tricolor: linear-gradient(to bottom, hsl(var(--secondary)) 0%, hsl(0 0% 100%) 33%, hsl(var(--judicial)) 66%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(215 25% 97%));
+    --gradient-hover: linear-gradient(145deg, hsl(var(--primary-light)), hsl(var(--secondary-light)));
+
+    /* Professional Shadows */
+    --shadow-justice: 0 20px 40px -12px hsl(var(--primary) / 0.25);
+    --shadow-card: 0 8px 25px -8px hsl(var(--primary) / 0.15);
+    --shadow-glow: 0 0 50px hsl(var(--secondary) / 0.6);
+    --shadow-hover: 0 15px 35px -10px hsl(var(--primary) / 0.3);
+
+    /* Smooth Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-spring: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark Judicial Theme - Professional & Accessible */
+    --background: 220 95% 4%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 85% 6%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 85% 6%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 215 75% 65%;
+    --primary-foreground: 220 95% 4%;
+    --primary-vibrant: 215 85% 70%;
+    --primary-light: 215 60% 20%;
+
+    --secondary: 35 85% 65%;
+    --secondary-foreground: 220 95% 4%;
+    --secondary-light: 35 70% 20%;
+
+    --judicial: 120 50% 55%;
+    --judicial-foreground: 220 95% 4%;
+    --judicial-light: 120 40% 20%;
+
+    --success: 138 55% 60%;
+    --success-foreground: 220 95% 4%;
+    --success-light: 138 45% 20%;
+
+    --warning: 25 85% 65%;
+    --warning-foreground: 220 95% 4%;
+    --warning-light: 25 75% 20%;
+
+    --muted: 220 50% 15%;
+    --muted-foreground: 220 20% 70%;
+
+    --accent: 220 40% 18%;
+    --accent-foreground: 220 10% 95%;
+
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 220 90% 6%;
+
+    --border: 220 40% 20%;
+    --input: 220 40% 20%;
+    --ring: 220 80% 70%;
+
+    --sidebar-background: 220 85% 8%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-primary: 220 80% 70%;
+    --sidebar-primary-foreground: 220 90% 6%;
+    --sidebar-accent: 220 60% 15%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 50% 18%;
+    --sidebar-ring: 220 80% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Accessibility Features */
+  .high-contrast {
+    filter: contrast(150%);
+  }
+
+  .dyslexia-friendly {
+    font-family: 'OpenDyslexic', Arial, sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+  }
+
+  .large-text {
+    font-size: 120%;
+  }
+
+  .xl-text {
+    font-size: 140%;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus indicators for accessibility */
+  *:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-background outline-none;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 rounded-lg;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  /* Tricolor separator */
+  .tricolor-separator {
+    height: 4px;
+    background: var(--gradient-tricolor);
+    width: 100%;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-hover hover:-translate-y-1 hover:scale-[1.02];
+  }
+
+  /* Button animations */
+  .btn-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
+  }
+
+  /* Text animations */
+  .text-shimmer {
+    background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 50%, hsl(var(--foreground)) 100%);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: -200% 0; }
+  }
+
+  /* Pulse animation for important elements */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { 
+      box-shadow: 0 0 20px hsl(var(--secondary) / 0.4);
+      transform: scale(1);
+    }
+    50% { 
+      box-shadow: 0 0 40px hsl(var(--secondary) / 0.8);
+      transform: scale(1.05);
+    }
+  }
+}
