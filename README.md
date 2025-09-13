@@ -5,7 +5,7 @@ JusticeAI (NyayAI) is an **AI-powered legal ecosystem** designed to democratize 
 
 ##  Problem Statement  
 India’s justice system faces three critical challenges:  
-- **Limited Access**: 70% of Indians cannot afford legal representation.  
+- **Limited Access**: 80% of Indians cannot afford legal representation.  
 - **Low Awareness**: Citizens lack knowledge of constitutional rights and legal procedures.  
 - **Systemic Bias**: Judicial outcomes often reflect discrimination (caste, gender, economic status).  
 
