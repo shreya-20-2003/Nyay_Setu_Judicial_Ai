@@ -146,7 +146,9 @@ const NyayaAI = () => {
   const [showResults, setShowResults] = useState(false);
   const [crimeType, setCrimeType] = useState("");
 
-  const handleSendMessage = () => {
+
+// ...existing code...
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
     // Add user message
@@ -156,36 +158,43 @@ const NyayaAI = () => {
       content: inputValue,
       timestamp: new Date(),
     };
-
     setMessages(prev => [...prev, userMessage]);
 
-    // Simulate AI response and analyze crime type
-    setTimeout(() => {
+    // Call backend Gemini API
+    try {
+      const res = await fetch("http://localhost:5000/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: inputValue })
+      });
+      const data = await res.json();
+      if (res.ok && data.completion) {
+        const aiResponse: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          type: "ai",
+          content: data.completion,
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, aiResponse]);
+        setShowResults(true);
+      } else {
+        const aiResponse: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          type: "ai",
+          content: data.error || "AI could not generate a response.",
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, aiResponse]);
+      }
+    } catch (err) {
       const aiResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         type: "ai",
-        content: `Based on your description, this appears to be related to **fraud and criminal breach of trust** under Sections 420 and 406 of the Indian Penal Code.
-
-**Legal Analysis:**
-• Section 420 IPC - Cheating and dishonestly inducing delivery of property
-• Section 406 IPC - Criminal breach of trust
-• Possible civil remedies under Contract Act
-
-**Immediate Steps:**
-1. Preserve all evidence (contracts, communications, financial records)
-2. File a complaint with police (if criminal breach involved)
-3. Consider civil suit for damages
-4. Consult a criminal law specialist
-
-I've found specialized lawyers and similar cases that might help your situation. Please review the recommendations below.`,
+        content: "Network error. Please try again.",
         timestamp: new Date(),
       };
-
       setMessages(prev => [...prev, aiResponse]);
-      setCrimeType("Fraud and Criminal Breach of Trust");
-      setShowResults(true);
-    }, 2000);
-
+    }
     setInputValue("");
   };
 
