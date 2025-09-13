@@ -3,17 +3,17 @@
 
 JusticeAI (NyayAI) is an **AI-powered legal ecosystem** designed to democratize access to justice, enhance legal awareness, and reduce systemic bias in India’s judicial system. 
 
-## 🚨 Problem Statement  
+##  Problem Statement  
 India’s justice system faces three critical challenges:  
 - **Limited Access**: 70% of Indians cannot afford legal representation.  
 - **Low Awareness**: Citizens lack knowledge of constitutional rights and legal procedures.  
 - **Systemic Bias**: Judicial outcomes often reflect discrimination (caste, gender, economic status).  
 
-## 💡 Proposed Solution: JusticeAI (NyayAI)  
+##  Proposed Solution: JusticeAI (NyayAI)  
 
 A comprehensive AI platform that combines **Constitutional Legal Assistance**, **Smart Lawyer Matching**, and **Judicial Bias Detection**.  
 
-### 🔑 Key Features  
+###  Key Features  
 
 1. **Nyaya AI (Constitutional Assistant)**  
    - Multilingual legal Q&A (Hindi, English & regional languages)  
@@ -34,7 +34,7 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
    - Plain-language explanations of clauses  
    - Precedent matching with case law  
 
-## ✨ Unique Features  
+##  Unique Features  
 - 📘 First AI trained on the **Indian Constitution & Laws**  
 - 🎯 AI-powered lawyer carousel with advanced filters  
 - 🌍 Multilingual access (Hindi + 12 regional languages)  
@@ -42,7 +42,7 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
 - 🔎 Integrated **verified lawyer marketplace**  
 - 📱 Mobile-first, accessible platform for rural areas  
 
-## 🛠️ Technology Stack  
+##  Technology Stack  
 
 - **AI/ML**: Hugging Face Transformers, custom-trained legal NLP models  
 - **Databases**: PostgreSQL (case data), Neo4j (legal knowledge graph), Elasticsearch (judgment search)  
@@ -50,21 +50,21 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
 - **Frontend**: React / Next.js  
 - **Data Sources**: Supreme Court SUVAS, High Courts, Bar Council, legal databases (Manupatra, SCC Online)  
 
-## 🌍 Real-World Impact  
+##  Real-World Impact  
 
 - **Democratizing Legal Access**: Free consultations & affordable lawyer discovery  
 - **Transparency**: Judicial bias detection fosters accountability  
 - **Efficiency**: 24/7 instant legal analysis & document automation  
 - **Scalability**: Expandable to all Indian courts & legal domains  
 
-## 📊 Measurable Outcomes  
+##  Measurable Outcomes  
 
 - 📈 Increase legal consultation rate by **300%**  
 - 💰 Reduce consultation cost by **80%**  
 - ⚖️ Detect bias patterns in **95% of courts**  
 - ⭐ Achieve **90% satisfaction** in lawyer recommendations  
 
-## 🚀 Feasibility  
+##  Feasibility  
 
 - **Technology Readiness**: Uses open legal databases (SUVAS, High Courts) & proven NLP frameworks  
 - **Implementation Path**: Start with **MVP** (Nyaya AI + Lawyer Carousel)  
