@@ -35,12 +35,12 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
    - Precedent matching with case law  
 
 ##  Unique Features  
-- 📘 First AI trained on the **Indian Constitution & Laws**  
-- 🎯 AI-powered lawyer carousel with advanced filters  
-- 🌍 Multilingual access (Hindi + 12 regional languages)  
-- 🏛️ Bias monitoring for judicial transparency  
-- 🔎 Integrated **verified lawyer marketplace**  
-- 📱 Mobile-first, accessible platform for rural areas  
+- First AI trained on the **Indian Constitution & Laws**  
+-  AI-powered lawyer carousel with advanced filters  
+-  Multilingual access (Hindi + 12 regional languages)  
+-  Bias monitoring for judicial transparency  
+-  Integrated **verified lawyer marketplace**  
+-  Mobile-first, accessible platform for rural areas  
 
 ##  Technology Stack  
 
@@ -59,10 +59,10 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
 
 ##  Measurable Outcomes  
 
-- 📈 Increase legal consultation rate by **300%**  
-- 💰 Reduce consultation cost by **80%**  
-- ⚖️ Detect bias patterns in **95% of courts**  
-- ⭐ Achieve **90% satisfaction** in lawyer recommendations  
+- Increase legal consultation rate by **300%**  
+-  Reduce consultation cost by **80%**  
+-  Detect bias patterns in **95% of courts**  
+-  Achieve **90% satisfaction** in lawyer recommendations  
 
 ##  Feasibility  
 
@@ -70,9 +70,9 @@ A comprehensive AI platform that combines **Constitutional Legal Assistance**, *
 - **Implementation Path**: Start with **MVP** (Nyaya AI + Lawyer Carousel)  
 - **Scalability**: Cloud-based, multilingual, mobile-first architecture ensures rural accessibility  
 
-## 🤝 Support Us  
+##  Support Us  
 
 JusticeAI is a mission to make **justice accessible, transparent, and fair for every citizen of India**.  
 We are looking for collaborators, researchers, and developers passionate about **AI for Social Good**.  
 
-📢 *Join us in building a future where justice is not a privilege but a right for all.*  
+ *Join us in building a future where justice is not a privilege but a right for all.*  
