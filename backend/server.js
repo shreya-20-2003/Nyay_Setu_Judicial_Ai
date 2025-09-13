@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRouter from './routes/auth.js';
+import aiRouter from './routes/ai.js';
 
 dotenv.config();
 
@@ -27,8 +28,10 @@ mongoose.connection.once('open', () => {
   console.log('✅ Connected to MongoDB');
 });
 
+
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/ai', aiRouter);
 
 app.get('/', (req, res) => {
   res.send('✅ Backend is running');
