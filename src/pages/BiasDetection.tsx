@@ -86,6 +86,14 @@ const BiasDetection = () => {
     return { level: "High", color: "destructive" };
   };
 
+  const user = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("user") || "{}");
+    } catch {
+      return {};
+    }
+  })();
+
   return (
     <div className="min-h-screen bg-gradient-tricolor relative overflow-hidden">
       {/* Tricolour Background Elements */}
@@ -107,19 +115,19 @@ const BiasDetection = () => {
             <Card className="border-constitutional/30 shadow-xl bg-gradient-to-br from-background via-constitutional/5 to-judicial/5 backdrop-blur">
               <CardHeader className="text-center bg-gradient-to-r from-constitutional/10 to-judicial/10 rounded-t-lg">
                 <div className="w-20 h-20 bg-gradient-to-br from-constitutional to-judicial rounded-full mx-auto flex items-center justify-center mb-4 shadow-lg">
-                  <span className="text-2xl font-bold text-white">{mockUser.name.charAt(0)}</span>
+                  <span className="text-2xl font-bold text-white">{user?.name.charAt(0)}</span>
                 </div>
-                <CardTitle className="text-xl">{mockUser.name}</CardTitle>
-                <CardDescription>{mockUser.email}</CardDescription>
+                <CardTitle className="text-xl">{user?.name}</CardTitle>
+                <CardDescription>{user?.email}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-gradient-to-r from-constitutional/10 to-judicial/10 rounded-lg">
                   <span className="text-muted-foreground">Cases Analyzed</span>
-                  <Badge variant="secondary" className="bg-constitutional text-white">{mockUser.casesAnalyzed}</Badge>
+                  <Badge variant="secondary" className="bg-constitutional text-white">{user?.casesAnalyzed}</Badge>
                 </div>
                 <div className="flex items-center justify-between p-3 bg-gradient-to-r from-judicial/10 to-constitutional/10 rounded-lg">
                   <span className="text-muted-foreground">Member Since</span>
-                  <Badge variant="secondary" className="bg-judicial text-white">{mockUser.memberSince}</Badge>
+                  <Badge variant="secondary" className="bg-judicial text-white">{user?.memberSince}</Badge>
                 </div>
                 <div className="flex items-center justify-center space-x-2 pt-4 p-3 bg-gradient-to-r from-constitutional/5 via-background to-judicial/5 rounded-lg">
                   <Scale className="h-6 w-6 text-constitutional animate-pulse" />
