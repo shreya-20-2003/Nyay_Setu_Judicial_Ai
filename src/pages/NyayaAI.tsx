@@ -227,21 +227,21 @@ const NyayaAI = () => {
             <Card className="sticky top-24">
               <CardHeader className="text-center pb-4">
                 <Avatar className="w-20 h-20 mx-auto ring-4 ring-primary/20">
-                  <AvatarImage src={mockUser.avatar} alt={mockUser.name} />
-                  <AvatarFallback>{mockUser.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
+                  <AvatarImage src={user?.avatar} alt={user?.name} />
+                  <AvatarFallback>{user?.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                 </Avatar>
-                <CardTitle className="text-lg">{mockUser.name}</CardTitle>
-                <p className="text-sm text-muted-foreground">Member since {mockUser.joinDate}</p>
+                <CardTitle className="text-lg">{user?.name}</CardTitle>
+                <p className="text-sm text-muted-foreground">Member since {user?.joinDate}</p>
               </CardHeader>
               
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div className="space-y-1">
-                    <div className="text-2xl font-bold text-primary">{mockUser.consultations}</div>
+                    <div className="text-2xl font-bold text-primary">{user?.consultations}</div>
                     <div className="text-xs text-muted-foreground">Consultations</div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-2xl font-bold text-judicial">{mockUser.cases}</div>
+                    <div className="text-2xl font-bold text-judicial">{user?.cases}</div>
                     <div className="text-xs text-muted-foreground">Active Cases</div>
                   </div>
                 </div>
