@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LawyerCarousel } from "@/components/LawyerCarousel";
@@ -145,6 +146,16 @@ const NyayaAI = () => {
   const [inputValue, setInputValue] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [crimeType, setCrimeType] = useState("");
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("user");
+      if (raw) setUser(JSON.parse(raw));
+    } catch {
+      setUser(null);
+    }
+  }, []);
 
 
 // ...existing code...

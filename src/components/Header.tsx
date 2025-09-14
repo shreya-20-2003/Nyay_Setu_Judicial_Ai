@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -20,30 +20,9 @@ import {
   Accessibility,
   Type,
   Eye,
-  UserCheck,
 } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { AuthModal } from "@/components/AuthModal";
 
 const languages = [
   { code: "en", name: "English", native: "English" },
@@ -63,68 +42,18 @@ const languages = [
 export const Header = () => {
   const [isDark, setIsDark] = useState(false);
   const [currentLang, setCurrentLang] = useState(languages[0]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<any>(null);
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [dyslexiaFont, setDyslexiaFont] = useState(false);
 
-  // sign-in/sign-up dialog state
+  // Auth state
   const [authOpen, setAuthOpen] = useState(false);
-  const [authTab, setAuthTab] = useState<"signin" | "signup">("signin");
-  const [formData, setFormData] = useState({ email: "", password: "", name: "" });
+  const [user, setUser] = useState<any>(null);
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSignIn = async () => {
-    try {
-      const res = await fetch("https://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUser(data.user || data);
-        setIsLoggedIn(true);
-        setAuthOpen(false);
-      } else {
-        alert(data.error || "Login failed");
-      }
-    } catch (err) {
-      alert("Network error");
-    }
-  };
-
-  const handleSignUp = async () => {
-    try {
-      const res = await fetch("https://localhost:5000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUser(data.user || data);
-        setIsLoggedIn(true);
-        setAuthOpen(false);
-      } else {
-        alert(data.error || "Registration failed");
-      }
-    } catch (err) {
-      alert("Network error");
-    }
-  };
+  useEffect(() => {
+    const saved = localStorage.getItem("user");
+    if (saved) setUser(JSON.parse(saved));
+  }, []);
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -151,7 +80,9 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* Tricolor bar */}
       <div className="tricolor-separator" />
+
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center space-x-3">
@@ -166,7 +97,7 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Nav */}
+        {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center space-x-8">
           {navigationItems.map((item) => (
             <a
@@ -176,9 +107,7 @@ export const Header = () => {
               onClick={(e) => {
                 if (item.href === "#footer") {
                   e.preventDefault();
-                  document
-                    .getElementById("footer")
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
             >
@@ -188,30 +117,75 @@ export const Header = () => {
           ))}
         </nav>
 
-        {/* Right */}
+        {/* Right Side */}
         <div className="flex items-center space-x-2">
-          {/* Theme toggle */}
-          <Button variant="ghost" size="icon" onClick={toggleTheme}>
+          {/* Accessibility */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="hidden md:flex">
+                <Accessibility className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem onClick={toggleHighContrast}>
+                <Eye className="mr-2 h-4 w-4" />
+                {highContrast ? "Normal" : "High"} Contrast
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={toggleDyslexiaFont}>
+                <Type className="mr-2 h-4 w-4" />
+                Dyslexia Friendly Font
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Language */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="gap-2">
+                <Globe className="w-4 h-4" />
+                <span className="hidden sm:inline">{currentLang.native}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 max-h-96 overflow-y-auto">
+              {languages.map((lang) => (
+                <DropdownMenuItem
+                  key={lang.code}
+                  onClick={() => setCurrentLang(lang)}
+                  className="flex justify-between"
+                >
+                  <span>{lang.name}</span>
+                  <span className="text-muted-foreground">{lang.native}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Theme */}
+          <Button variant="ghost" size="icon" onClick={toggleTheme} className="btn-glow">
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </Button>
 
-          {isLoggedIn ? (
+          {/* Auth */}
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                   <Avatar className="h-10 w-10 ring-2 ring-gradient-justice">
                     <AvatarImage src="/api/placeholder/40/40" alt="Profile" />
                     <AvatarFallback className="bg-gradient-hero text-white font-bold">
-                      {user?.name?.[0]?.toUpperCase() ?? "U"}
+                      {user.name ? user.name[0].toUpperCase() : "U"}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  Profile
-                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+  <a href="/profile" className="flex items-center">
+    <User className="mr-2 h-4 w-4" />
+    Profile
+  </a>
+</DropdownMenuItem>
+
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
                   Settings
@@ -219,8 +193,8 @@ export const Header = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => {
-                    setIsLoggedIn(false);
                     setUser(null);
+                    localStorage.removeItem("user");
                   }}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
@@ -230,31 +204,16 @@ export const Header = () => {
             </DropdownMenu>
           ) : (
             <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setAuthTab("signin");
-                  setAuthOpen(true);
-                }}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setAuthOpen(true)}>
                 Sign In
               </Button>
-              <Button
-                variant="hero"
-                size="sm"
-                className="btn-glow"
-                onClick={() => {
-                  setAuthTab("signup");
-                  setAuthOpen(true);
-                }}
-              >
+              <Button variant="hero" size="sm" onClick={() => setAuthOpen(true)} className="btn-glow">
                 Sign Up
               </Button>
             </div>
           )}
 
-          {/* Mobile Menu */}
+          {/* Mobile Nav */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden">
@@ -282,70 +241,15 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Auth dialog inline */}
-      <Dialog open={authOpen} onOpenChange={setAuthOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Welcome to NyaySetu</DialogTitle>
-            <DialogDescription>
-              Access constitutional guidance and legal assistance
-            </DialogDescription>
-          </DialogHeader>
-          <Tabs value={authTab} onValueChange={(v) => setAuthTab(v as any)}>
-            <TabsList className="grid grid-cols-2 w-full">
-              <TabsTrigger value="signin">
-                <User className="w-4 h-4 mr-2" /> Sign In
-              </TabsTrigger>
-              <TabsTrigger value="signup">
-                <UserCheck className="w-4 h-4 mr-2" /> Sign Up
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Sign In */}
-            <TabsContent value="signin" className="space-y-3 mt-4">
-              <Label>Email</Label>
-              <Input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-              />
-              <Label>Password</Label>
-              <Input
-                type="password"
-                value={formData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
-              />
-              <Button className="w-full mt-3" onClick={handleSignIn}>
-                Sign In
-              </Button>
-            </TabsContent>
-
-            {/* Sign Up */}
-            <TabsContent value="signup" className="space-y-3 mt-4">
-              <Label>Name</Label>
-              <Input
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-              />
-              <Label>Email</Label>
-              <Input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
-              />
-              <Label>Password</Label>
-              <Input
-                type="password"
-                value={formData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
-              />
-              <Button className="w-full mt-3" onClick={handleSignUp}>
-                Sign Up
-              </Button>
-            </TabsContent>
-          </Tabs>
-        </DialogContent>
-      </Dialog>
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authOpen}
+        onClose={() => setAuthOpen(false)}
+        onAuthenticated={(u) => {
+          setUser(u);
+          localStorage.setItem("user", JSON.stringify(u));
+        }}
+      />
     </header>
   );
 };
