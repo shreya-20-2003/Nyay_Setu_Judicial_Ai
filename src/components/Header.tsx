@@ -50,12 +50,6 @@ export const Header = () => {
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    const saved = localStorage.getItem("user");
-    if (saved) setUser(JSON.parse(saved));
-  }, []);
-=======
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -106,7 +100,6 @@ export const Header = () => {
       alert("Network error");
     }
   };
->>>>>>> 15ec4bdf726258e6bd31812ee7b50606bf79306f
 
   const toggleTheme = () => {
     setIsDark(!isDark);
