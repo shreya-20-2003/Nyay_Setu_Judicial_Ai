@@ -50,10 +50,63 @@ export const Header = () => {
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
 
+<<<<<<< HEAD
   useEffect(() => {
     const saved = localStorage.getItem("user");
     if (saved) setUser(JSON.parse(saved));
   }, []);
+=======
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSignIn = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data.user || data);
+        setIsLoggedIn(true);
+        setAuthOpen(false);
+      } else {
+        alert(data.error || "Login failed");
+      }
+    } catch (err) {
+      alert("Network error");
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data.user || data);
+        setIsLoggedIn(true);
+        setAuthOpen(false);
+      } else {
+        alert(data.error || "Registration failed");
+      }
+    } catch (err) {
+      alert("Network error");
+    }
+  };
+>>>>>>> 15ec4bdf726258e6bd31812ee7b50606bf79306f
 
   const toggleTheme = () => {
     setIsDark(!isDark);
