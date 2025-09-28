@@ -1,5 +1,5 @@
 # NYAYSETU – Intelligent Legal Assistant & Bias Detection Platform  
-## Theme: AI for Social Good – Ensuring Equal Access to Justice in India  
+## Theme: AI for Everything – Ensuring Equal Access to Justice in India  
 
 JusticeAI (NyayAI) is an **AI-powered legal ecosystem** designed to democratize access to justice, enhance legal awareness, and reduce systemic bias in India’s judicial system. 
 
